@@ -1,0 +1,7 @@
+INSERT INTO tbl_ambiente (nombre) VALUES("Convencional");
+INSERT INTO tbl_ambiente (nombre) VALUES("Realista");
+INSERT INTO tbl_ambiente (nombre) VALUES("Investigador");
+INSERT INTO tbl_ambiente (nombre) VALUES("Emprendedor");
+INSERT INTO tbl_ambiente (nombre) VALUES("Social");
+INSERT INTO tbl_ambiente (nombre) VALUES("Artístico");
+

@@ -1,0 +1,52 @@
+use sistemainteligente;
+delimiter //
+
+-- tbl_usuario
+
+drop procedure if exists sp_insertar_usuario//
+
+CREATE PROCEDURE sp_insertar_usuario(_nombre text, _apellido text,_cedula varchar(10),_fechaNacimiento date, _contrasenia text, _nivel int) 
+BEGIN
+        INSERT INTO tbl_usuario (nombre,apellido,cedula,fechaNacimiento,contrasenia,nivel) 
+	VALUES(_nombre,_apellido,_cedula,_fechaNacimiento,_contrasenia,_nivel);
+END//
+
+-- tbl_respuesta
+
+drop procedure if exists sp_insertar_respuesta//
+drop procedure if exists sp_mostrar_respuesta//
+
+CREATE PROCEDURE sp_insertar_respuesta(_id_pregunta int,_id_usuario int,_respuesta text,_valor int) 
+BEGIN
+	INSERT INTO tbl_respuesta(id_pregunta, id_usuario,respuesta,valor,fecha) 
+	VALUES(_id_pregunta, _id_usuario,_respuesta,_valor,CURRENT_TIMESTAMP());
+END//
+
+CREATE PROCEDURE sp_mostrar_respuesta_tipo(_cedula varchar(10))
+BEGIN
+SELECT a.nombre as ambiente ,p.tipo, AVG(r.valor) as ValorPromedio
+FROM tbl_respuesta as r
+INNER JOIN tbl_usuario as u on u.id_usuario=r.id_usuario
+INNER JOIN tbl_pregunta as p on p.id_pregunta=r.id_pregunta
+INNER JOIN tbl_ambiente as a on a.id_ambiente=p.id_ambiente
+WHERE u.cedula=_cedula
+GROUP BY a.nombre,p.tipo;
+END
+//
+
+CREATE PROCEDURE sp_mostrar_respuesta_ambiente(_cedula varchar(10))
+BEGIN
+SELECT a.nombre as ambiente , AVG(r.valor) as ValorPromedio
+FROM tbl_respuesta as r
+INNER JOIN tbl_usuario as u on u.id_usuario=r.id_usuario
+INNER JOIN tbl_pregunta as p on p.id_pregunta=r.id_pregunta
+INNER JOIN tbl_ambiente as a on a.id_ambiente=p.id_ambiente
+WHERE u.cedula=_cedula
+GROUP BY a.nombre
+ORDER BY ValorPromedio DESC;
+END
+//
+
+delimiter ;
+
+

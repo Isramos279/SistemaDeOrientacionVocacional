@@ -1,0 +1,16 @@
+SELECT a.nombre as ambiente ,p.tipo, AVG(r.valor) as ValorPromedio
+FROM tbl_respuesta as r
+INNER JOIN tbl_usuario as u on u.id_usuario=r.id_usuario
+INNER JOIN tbl_pregunta as p on p.id_pregunta=r.id_pregunta
+INNER JOIN tbl_ambiente as a on a.id_ambiente=p.id_ambiente
+WHERE u.cedula="1000000000"
+GROUP BY a.nombre,p.tipo;
+
+SELECT a.nombre as ambiente , AVG(r.valor) as ValorPromedio
+FROM tbl_respuesta as r
+INNER JOIN tbl_usuario as u on u.id_usuario=r.id_usuario
+INNER JOIN tbl_pregunta as p on p.id_pregunta=r.id_pregunta
+INNER JOIN tbl_ambiente as a on a.id_ambiente=p.id_ambiente
+WHERE u.cedula="1000000000"
+GROUP BY a.nombre
+ORDER BY ValorPromedio DESC;

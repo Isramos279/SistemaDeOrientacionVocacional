@@ -1,0 +1,43 @@
+Drop database if EXISTS sistemainteligente;
+Create database sistemainteligente;
+use sistemainteligente;
+
+DROP TABLE IF EXISTS tbl_usuario;
+DROP TABLE IF EXISTS tbl_ambiente;
+DROP TABLE IF EXISTS tbl_pregunta;
+DROP TABLE IF EXISTS tbl_respuesta;
+
+create table tbl_usuario
+(
+    id_usuario int auto_increment primary key not null,
+    nombre text not null,
+    apellido text not null,
+    cedula varchar(10) not null,
+    fechaNacimiento date not null,
+    contrasenia text not null,
+    nivel int not null
+);
+create table tbl_ambiente
+(
+    id_ambiente int auto_increment primary key not null,
+    nombre text not null
+);
+create table tbl_pregunta
+(
+    id_pregunta int auto_increment primary key not null,
+    id_ambiente int not null,
+	foreign key(id_ambiente) references tbl_ambiente(id_ambiente),
+    pregunta text not null,
+    tipo text not null
+);
+create table tbl_respuesta
+(
+    id_respuesta int auto_increment primary key not null,
+    id_pregunta int not null,
+    id_usuario int not null,
+	foreign key(id_pregunta) references tbl_pregunta(id_pregunta),
+	foreign key(id_usuario) references tbl_usuario(id_usuario),
+    respuesta text not null,
+    valor int not null,
+    fecha date not null
+);
